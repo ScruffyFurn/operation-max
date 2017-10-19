@@ -1,9 +1,9 @@
 /* jshint esversion: 6 */
-const restify = require('restify');
+const clients = require('restify-clients');
 
 module.exports = (config) => {
     return (query, callback) => {
-        const client = restify.createJsonClient({
+        const client = clients.createJsonClient({
             url: `https://westus.api.cognitive.microsoft.com`,
             headers: {
                 'Ocp-Apim-Subscription-Key': config.apiKey
@@ -32,3 +32,4 @@ module.exports = (config) => {
         });
     };
 };
+

@@ -118,7 +118,7 @@ In this task, you will add the ability to send and receive `event` messages to y
 1. Above the `var bot = new builder.UniversalBot(...);` line, add the following code which tells _Restify_ to serve the `web-ui/default.htm` file as the default web page.
 
     ``` javascript
-    server.get(/\/?.*/, restify.serveStatic({
+    server.get(/\/?.*/, restify.plugins.serveStatic({
         directory: path.join(__dirname, 'web-ui'),
         default: 'default.htm'
     }));

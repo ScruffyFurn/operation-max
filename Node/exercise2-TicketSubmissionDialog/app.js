@@ -1,6 +1,8 @@
 /* jshint esversion: 6 */
 require('dotenv').config();
 const restify = require('restify');
+require('restify').plugins;
+const clients = require('restify-clients');
 const fs = require('fs');
 const builder = require('botbuilder');
 const ticketsApi = require('./ticketsApi');
@@ -15,7 +17,7 @@ server.listen(listenPort, () => {
 });
 
 // Setup body parser and sample tickets api
-server.use(restify.bodyParser());
+server.use(restify.plugins.bodyParser());
 server.post('/api/tickets', ticketsApi);
 
 // Create chat connector for communicating with the Bot Framework Service
@@ -60,7 +62,7 @@ var bot = new builder.UniversalBot(connector, [
                 description: session.dialogData.description,
             };
 
-            const client = restify.createJsonClient({ url: ticketSubmissionUrl });
+            const client = clients.createJsonClient({ url: ticketSubmissionUrl });
 
             client.post('/api/tickets', data, (err, request, response, ticketId) => {
                 if (err || ticketId == -1) {
@@ -81,7 +83,7 @@ var bot = new builder.UniversalBot(connector, [
 ]);
 
 const createCard = (ticketId, data) => {
-    var cardTxt = fs.readFileSync('C:/projects/help-desk-bot-lab/Node/exercise2-TicketSubmissionDialog/cards/ticket.json', 'UTF-8');
+    var cardTxt = fs.readFileSync('./cards/ticket.json', 'UTF-8');
 
     cardTxt = cardTxt.replace(/{ticketId}/g, ticketId)
                     .replace(/{severity}/g, data.severity)

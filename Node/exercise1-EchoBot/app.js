@@ -1,6 +1,8 @@
 /* jshint esversion: 6 */
 require('dotenv').config();
 const restify = require('restify');
+require('restify').plugins;
+const clients = require('restify-clients');
 const builder = require('botbuilder');
 
 // Setup Restify Server

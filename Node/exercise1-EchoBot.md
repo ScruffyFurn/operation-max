@@ -24,10 +24,10 @@ The Bot Builder SDK for Node.js is a powerful, easy-to-use framework that provid
     npm init
     ```
 
-1. Next, install the [Bot Builder SDK](https://dev.botframework.com), [Restify](http://restify.com/) and [Dotenv](https://github.com/motdotla/dotenv) modules by running the following npm commands:
+1. Next, install the [Bot Builder SDK](https://dev.botframework.com), [Restify](http://restify.com/), [Restify Clients](https://github.com/restify/clients/) and [Dotenv](https://github.com/motdotla/dotenv) modules by running the following npm commands:
 
     ```
-    npm install --save botbuilder restify dotenv
+    npm install --save botbuilder restify restify-clients dotenv
     ```
 
     Bot Builder, part of Bot Framework, is used to create the bot, while Restify is used to serve the web application which will host your bot. Please notice that the Bot Builder SDK is independent of the Web framework you use. This hands-on lab uses Restify, but you can use others like Express or Koa. Dotenv is used to easily maintain all configuration settings in a separated file.
@@ -62,6 +62,8 @@ The Bot Builder SDK for Node.js is a powerful, easy-to-use framework that provid
     ``` javascript
     require('dotenv').config();
     const restify = require('restify');
+    require('restify').plugins;
+    const clients = require('restify-clients');
     const builder = require('botbuilder');
 
     // Setup Restify Server

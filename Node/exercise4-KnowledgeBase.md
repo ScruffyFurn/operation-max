@@ -109,11 +109,11 @@ In this task you will add a dialog to handle the Intent you just created and cal
 1. Add a new empty file named **azureSearchApiClient.js** and add the following code which will retrieve the data from *Azure Search* via its REST API.
 
     ```javascript
-    const restify = require('restify');
+    const clients = require('restify-clients');
 
     module.exports = (config) => {
         return (query, callback) => {
-            const client = restify.createJsonClient({ url: `https://${config.searchName}.search.windows.net/` });
+            const client = clients.createJsonClient({ url: `https://${config.searchName}.search.windows.net/` });
             var urlPath = `/indexes/${config.indexName}/docs?api-key=${config.searchKey}&api-version=2015-02-28&${query}`;
 
             client.get(urlPath, (err, request, response, result) => {

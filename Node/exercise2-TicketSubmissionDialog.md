@@ -162,7 +162,7 @@ The steps below will help you clean up the code in `app.js` to better support th
 
     ```javascript
     // Setup body parser and tickets api
-    server.use(restify.bodyParser());
+    server.use(restify.plugins.bodyParser());
     server.post('/api/tickets', ticketsApi);
     ```
 
@@ -178,7 +178,7 @@ The steps below will help you clean up the code in `app.js` to better support th
                 description: session.dialogData.description,
             }
 
-            const client = restify.createJsonClient({ url: ticketSubmissionUrl });
+            const client = clients.createJsonClient({ url: ticketSubmissionUrl });
 
             client.post('/api/tickets', data, (err, request, response, ticketId) => {
                 if (err || ticketId == -1) {

@@ -1,6 +1,8 @@
 /* jshint esversion: 6 */
 require('dotenv').config();
 const restify = require('restify');
+require('restify').plugins;
+const clients = require('restify-clients');
 const fs = require('fs');
 const builder = require('botbuilder');
 const ticketsApi = require('./ticketsApi');
@@ -29,7 +31,7 @@ server.listen(listenPort, () => {
 });
 
 // Setup body parser and sample tickets api
-server.use(restify.bodyParser());
+server.use(restify.plugins.bodyParser());
 server.post('/api/tickets', ticketsApi);
 
 // Create chat connector for communicating with the Bot Framework Service
@@ -143,7 +145,7 @@ bot.dialog('SubmitTicket', [
                 description: session.dialogData.description,
             };
 
-            const client = restify.createJsonClient({ url: ticketSubmissionUrl });
+            const client = clients.createJsonClient({ url: ticketSubmissionUrl });
 
             client.post('/api/tickets', data, (err, request, response, ticketId) => {
                 if (err || ticketId == -1) {

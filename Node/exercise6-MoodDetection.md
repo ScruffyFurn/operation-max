@@ -42,39 +42,39 @@ In this task you will create a new module to call the Text Analytics API from th
     > **NOTE:** Notice that the client is hitting the `/sentiment` endpoint. The Text Analytics API also provides the `/keyPhrases` and `/languages` endpoints. Also notice that you can send more than one document to analyze.
 
     ```javascript
-    const restify = require('restify');
-
+    const clients = require('restify-clients');
+    
     module.exports = (config) => {
         return (query, callback) => {
-            const client = restify.createJsonClient({
+            const client = clients.createJsonClient({
                 url: `https://westus.api.cognitive.microsoft.com`,
                 headers: {
                     'Ocp-Apim-Subscription-Key': config.apiKey
-                }
+                    }
             });
 
-            const payload = {
-                documents: [{
-                    language: 'en',
-                    id: 'singleId',
-                    text: query
-                }]
-            };
-
-            const urlPath = '/text/analytics/v2.0/sentiment';
-
-            client.post(urlPath, payload, (err, request, response, result) => {
-                if (!err &&
-                    response &&
-                    response.statusCode == 200 &&
-                    result.documents[0]) {
-                    callback(null, result.documents[0].score);
-                } else {
-                    callback(err, null);
-                }
-            });
+        const payload = {
+            documents: [{
+                language: 'en',
+                id: 'singleId',
+                text: query
+            }]
         };
+
+        const urlPath = '/text/analytics/v2.0/sentiment';
+
+        client.post(urlPath, payload, (err, request, response, result) => {
+            if (!err &&
+                response &&
+                response.statusCode == 200 &&
+                result.documents[0]) {
+                callback(null, result.documents[0].score);
+            } else {
+                callback(err, null);
+            }
+        });
     };
+};
     ```
 
 ## Task 3: Modify the Bot to Ask for Feedback and Analyze the User's Sentiments
